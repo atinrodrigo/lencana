@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pasport Adiwira Saya</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: #eaf2ff;
+    color: #193464;
+    font-family: Arial, sans-serif;
+  }
+
+  header {
+    padding: 45px 20px 65px;
+    background: #194c98;
+    color: white;
+    text-align: center;
+  }
+
+  header small {
+    color: #ffd36a;
+    font-weight: bold;
+    letter-spacing: 3px;
+  }
+
+  h1 { font-family: Georgia, serif; font-size: 36px; }
+  h2 { font-family: Georgia, serif; }
+
+  main {
+    max-width: 1100px;
+    margin: -25px auto 40px;
+    padding: 0 16px;
+  }
+
+  .panel {
+    padding: 28px;
+    background: #fff9e9;
+    border-radius: 26px;
+    box-shadow: 0 12px 30px #19346415;
+  }
+
+  .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  #count {
+    background: #ffe8a6;
+    padding: 12px 18px;
+    border-radius: 25px;
+    font-weight: bold;
+  }
+
+  progress {
+    width: 100%;
+    height: 16px;
+    margin: 20px 0;
+    accent-color: #e85b9d;
+  }
+
+  #notice, #warning { line-height: 1.6; }
+  #warning { color: #92400e; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 22px 12px;
+    text-align: center;
+    background: #f4f7fc;
+    border: 2px solid #dae4f2;
+    border-radius: 22px;
+  }
+
+  .card.earned {
+    background: #fff2bf;
+    border-color: #f4c951;
+  }
+
+  .icon {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    height: 76px;
+    margin: 20px 0;
+    background: #ddd;
+    color: #888;
+    border-radius: 22px;
+    font-size: 40px;
+    box-shadow: 0 6px #0001;
+  }
+
+  .earned .icon {
+    background: #ffcf51;
+    color: #194c98;
+  }
+
+  .card h3 {
+    min-height: 56px;
+    font-size: 18px;
+  }
+
+  button, .back {
+    display: inline-block;
+    padding: 14px 18px;
+    border: none;
+    border-radius: 12px;
+    background: #254f91;
+    color: white;
+    font: bold 15px Arial, sans-serif;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .card button { margin-top: auto; width: 100%; }
+
+  button:disabled {
+    background: #dce3ed;
+    color: #5c687c;
+    cursor: default;
+  }
+
+  button:focus-visible, a:focus-visible, input:focus-visible {
+    outline: 3px solid #e94791;
+    outline-offset: 4px;
+  }
+
+  #message { color: #22633a; font-weight: bold; }
+  .back { margin-top: 12px; }
+
+  .certificate-panel {
+    margin-top: 24px;
+    padding: 28px;
+    background: white;
+    border-radius: 25px;
+    text-align: center;
+  }
+
+  input {
+    width: min(100%, 350px);
+    padding: 12px;
+    border: 1px solid #afbdd2;
+    border-radius: 8px;
+    font-size: 17px;
+  }
+
+  #certificate {
+    margin-top: 25px;
+    padding: 35px;
+    border: 8px double #d9ad43;
+    background: white;
+    text-align: center;
+  }
+
+  [hidden] { display: none !important; }
+
+  @media (max-width: 850px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 450px) {
+    .panel { padding: 20px 12px; }
+    .grid { gap: 10px; }
+    .card { padding: 18px 8px; }
+    h1 { font-size: 29px; }
+  }
+
+  @media print {
+    body > header { display: none; }
+    main { margin: 0; max-width: none; }
+    main > section { display: none !important; }
+    main > #certificate:not([hidden]) { display: block !important; }
+    #certificate button { display: none; }
+  }
+</style>
+</head>
+
+<body>
+<header>
+  <small>MISI KECIL · SEMANGAT BESAR</small>
+  <h1>Pasport Adiwira Saya</h1>
+  <p>Kumpul lencana misi dan bina pasukan adiwira kesihatan!</p>
+</header>
+
+<main>
+  <section class="panel">
+    <div class="heading">
+      <div>
+        <h2>Koleksi lencana</h2>
+        <p>Selesaikan aktiviti dan tuntut lencana misi anda.</p>
+      </div>
+      <span id="count">0/5 lencana dikumpul</span>
+    </div>
+
+    <progress id="progress" max="5" value="0"
+      aria-label="Bilangan lencana dikumpulkan"></progress>
+
+    <p id="notice"></p>
+    <p id="warning" role="status" hidden></p>
+    <div class="grid" id="grid"></div>
+    <p id="message" role="status" aria-live="polite"></p>
+    <a id="back" class="back" hidden>Kembali ke Aktiviti</a>
+  </section>
+
+  <section class="certificate-panel">
+    <h2>Sijil pencapaian</h2>
+    <p>Kumpulkan semua 5 lencana untuk membuka sijil.</p>
+    <button id="certificateButton" disabled>Dapatkan Sijil</button>
+
+    <form id="nameForm" hidden>
+      <p><label for="studentInput">Nama pada sijil</label></p>
+      <input id="studentInput" maxlength="80"
+        autocomplete="name" required>
+      <p><button type="submit">Paparkan sijil</button></p>
+    </form>
+  </section>
+
+  <section id="certificate" hidden>
+    <p>SIJIL PENCAPAIAN</p>
+    <h1>Adiwira Kesihatan</h1>
+    <p>Dengan bangganya diberikan kepada</p>
+    <h2 id="studentName"></h2>
+    <p>Kerana berjaya mengumpulkan kelima-lima lencana misi.</p>
+    <p>⭐ Wira Muda · Detektif Influenza · Pelindung Kesihatan<br>
+      Wira Prihatin · Adiwira Cegah Influenza ⭐</p>
+    <p id="certificateDate"></p>
+    <button id="printButton">Cetak / Simpan PDF</button>
+  </section>
+</main>
+
+<script>
+"use strict";
+
+/* Pautan halaman sebenar daripada menu website Canva. */
+const CANVA = "https://norainiandiarip.my.canva.site/hindari-influenza";
+
+const MISSIONS = [
+  {
+    id: 1,
+    name: "Wira Muda",
+    icon: "★",
+    page: "Pencetus Idea",
+    returnURL: CANVA + "#page-PBbr92sYH1m16XKM"
+  },
+  {
+    id: 2,
+    name: "Detektif Influenza",
+    icon: "⌕",
+    page: "Langkah 1",
+    returnURL: CANVA + "#page-PBJmDqYdG0DTRsD4"
+  },
+  {
+    id: 3,
+    name: "Pelindung Kesihatan",
+    icon: "✚",
+    page: "Langkah 2",
+    returnURL: CANVA + "#page-PBt70g7ddTGmvhRs"
+  },
+  {
+    id: 4,
+    name: "Wira Prihatin",
+    icon: "♥",
+    page: "Langkah 3",
+    returnURL: CANVA + "#page-PBt2GfgGN7cvskzK"
+  },
+  {
+    id: 5,
+    name: "Adiwira Cegah Influenza",
+    icon: "ϟ",
+    page: "Pentaksiran",
+    returnURL: CANVA + "#page-PBKl0QL6CL5mqVrX"
+  }
+];
+
+const STORAGE_KEY = "pasport-adiwira-badges-v1";
+const $ = id => document.getElementById(id);
+
+const params = new URLSearchParams(window.location.search);
+const rawMission = params.get("mission");
+const missionId = /^[1-5]$/.test(rawMission || "")
+  ? Number(rawMission)
+  : null;
+
+const activeMission = MISSIONS.find(m => m.id === missionId);
+let storageAvailable = true;
+
+function readSavedBadges() {
+  try {
+    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+
+    if (!Array.isArray(data)) return new Set();
+
+    return new Set(
+      data.filter(id => Number.isInteger(id) && id >= 1 && id <= 5)
+    );
+  } catch {
+    storageAvailable = false;
+    return new Set();
+  }
+}
+
+let earned = readSavedBadges();
+
+/* Semak sama ada pelayar membenarkan simpanan. */
+try {
+  const testKey = STORAGE_KEY + "-test";
+  localStorage.setItem(testKey, "1");
+  localStorage.removeItem(testKey);
+} catch {
+  storageAvailable = false;
+}
+
+function saveBadges() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify([...earned]));
+  } catch {
+    storageAvailable = false;
+  }
+}
+
+function render() {
+  $("count").textContent = earned.size + "/5 lencana dikumpul";
+  $("progress").value = earned.size;
+
+  if (!activeMission) {
+    $("notice").textContent =
+      "Mod koleksi sahaja. Masuk melalui butang Ambil Lencana " +
+      "di website aktiviti untuk mengaktifkan satu misi.";
+    $("back").hidden = true;
+  } else {
+    $("notice").textContent = earned.has(missionId)
+      ? "Lencana Misi " + missionId +
+        " sudah dituntut. Kembali ke aktiviti untuk meneruskan pembelajaran."
+      : "Anda datang untuk Misi " + missionId +
+        ". Hanya lencana misi ini boleh dituntut.";
+
+    $("back").href = activeMission.returnURL;
+    $("back").textContent = "Kembali ke " + activeMission.page;
+    $("back").hidden = false;
+  }
+
+  $("warning").hidden = storageAvailable;
+  $("warning").textContent =
+    "Simpanan pelayar tidak tersedia. Lencana sesi ini mungkin hilang " +
+    "apabila halaman ditutup atau dimuat semula.";
+
+  $("grid").replaceChildren();
+
+  for (const mission of MISSIONS) {
+    const claimed = earned.has(mission.id);
+
+    const card = document.createElement("article");
+    card.className = "card" + (claimed ? " earned" : "");
+
+    const label = document.createElement("small");
+    label.textContent = "MISI " + mission.id;
+
+    const icon = document.createElement("div");
+    icon.className = "icon";
+    icon.textContent = mission.icon;
+    icon.setAttribute("aria-hidden", "true");
+
+    const title = document.createElement("h3");
+    title.textContent = mission.name;
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.disabled = claimed || mission.id !== missionId;
+
+    button.textContent = claimed
+      ? "✓ Sudah dituntut"
+      : mission.id === missionId
+        ? "Tuntut lencana"
+        : "🔒 Dikunci";
+
+    button.addEventListener("click", () => claimBadge(mission.id));
+
+    card.append(label, icon, title, button);
+    $("grid").append(card);
+  }
+
+  const complete = earned.size === 5;
+  $("certificateButton").disabled = !complete;
+
+  if (!complete) {
+    $("nameForm").hidden = true;
+    $("certificate").hidden = true;
+  }
+}
+
+function claimBadge(id) {
+  /* Hanya misi daripada pautan masuk boleh dituntut. */
+  if (id !== missionId || earned.has(id)) return;
+
+  /* Gabungkan koleksi yang mungkin disimpan oleh tab lain. */
+  for (const savedId of readSavedBadges()) {
+    earned.add(savedId);
+  }
+
+  if (earned.has(id)) {
+    render();
+    $("message").textContent = "Lencana ini sudah dituntut.";
+    return;
+  }
+
+  earned.add(id);
+  saveBadges();
+  render();
+
+  $("message").textContent =
+    "Tahniah! Lencana " + MISSIONS[id - 1].name +
+    " berjaya dikumpulkan.";
+}
+
+/* Selaraskan paparan jika koleksi berubah dalam tab lain. */
+window.addEventListener("storage", event => {
+  if (event.key === STORAGE_KEY || event.key === null) {
+    earned = readSavedBadges();
+    render();
+  }
+});
+
+$("certificateButton").addEventListener("click", () => {
+  if (earned.size !== 5) return;
+  $("nameForm").hidden = false;
+  $("studentInput").focus();
+});
+
+$("nameForm").addEventListener("submit", event => {
+  event.preventDefault();
+  if (earned.size !== 5) return;
+
+  const name = $("studentInput").value.trim();
+  if (!name) {
+    $("studentInput").focus();
+    return;
+  }
+
+  $("studentName").textContent = name;
+  $("certificateDate").textContent =
+    new Intl.DateTimeFormat("ms-MY", {
+      dateStyle: "long",
+      timeZone: "Asia/Kuala_Lumpur"
+    }).format(new Date());
+
+  $("certificate").hidden = false;
+  $("certificate").scrollIntoView({ behavior: "smooth" });
+});
+
+$("printButton").addEventListener("click", () => window.print());
+
+render();
+</script>
+</body>
+</html>

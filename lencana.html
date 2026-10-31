@@ -188,7 +188,38 @@
   }
 </style>
 </head>
+<div style="text-align:center; padding:0 20px 35px;">
+  <button
+    type="button"
+    onclick="mulaSemula()"
+    style="background:#b93660; color:white;
+           padding:14px 24px; border:0;
+           border-radius:12px; cursor:pointer;
+           font-size:16px; font-weight:bold;">
+    ↻ Mula Semula / Murid Baharu
+  </button>
+</div>
 
+<script>
+function mulaSemula() {
+  const setuju = confirm(
+    "Padam semua lencana pada pelayar ini dan mula semula untuk murid baharu?"
+  );
+
+  if (!setuju) return;
+
+  try {
+    localStorage.removeItem("pasport-adiwira-badges-v1");
+  } catch (error) {
+    alert("Simpanan tidak dapat dikosongkan. Sila cuba semula.");
+    return;
+  }
+
+  // Kembali ke halaman aktiviti Misi 1.
+  window.location.href =
+    "https://norainiandiarip.my.canva.site/hindari-influenza#page-PBbr92sYH1m16XKM";
+}
+</script>
 <body>
 <header>
   <small>MISI KECIL · SEMANGAT BESAR</small>

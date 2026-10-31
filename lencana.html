@@ -6,7 +6,9 @@
 <title>Pasport Adiwira Saya</title>
 
 <style>
-  * { box-sizing: border-box; }
+  * {
+    box-sizing: border-box;
+  }
 
   body {
     margin: 0;
@@ -28,8 +30,14 @@
     letter-spacing: 3px;
   }
 
-  h1 { font-family: Georgia, serif; font-size: 36px; }
-  h2 { font-family: Georgia, serif; }
+  h1 {
+    font-family: Georgia, serif;
+    font-size: 36px;
+  }
+
+  h2 {
+    font-family: Georgia, serif;
+  }
 
   main {
     max-width: 1100px;
@@ -66,8 +74,14 @@
     accent-color: #e85b9d;
   }
 
-  #notice, #warning { line-height: 1.6; }
-  #warning { color: #92400e; }
+  #notice,
+  #warning {
+    line-height: 1.6;
+  }
+
+  #warning {
+    color: #92400e;
+  }
 
   .grid {
     display: grid;
@@ -114,7 +128,8 @@
     font-size: 18px;
   }
 
-  button, .back {
+  button,
+  .back {
     display: inline-block;
     padding: 14px 18px;
     border: none;
@@ -126,7 +141,10 @@
     cursor: pointer;
   }
 
-  .card button { margin-top: auto; width: 100%; }
+  .card button {
+    margin-top: auto;
+    width: 100%;
+  }
 
   button:disabled {
     background: #dce3ed;
@@ -134,13 +152,21 @@
     cursor: default;
   }
 
-  button:focus-visible, a:focus-visible, input:focus-visible {
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
     outline: 3px solid #e94791;
     outline-offset: 4px;
   }
 
-  #message { color: #22633a; font-weight: bold; }
-  .back { margin-top: 12px; }
+  #message {
+    color: #22633a;
+    font-weight: bold;
+  }
+
+  .back {
+    margin-top: 12px;
+  }
 
   .certificate-panel {
     margin-top: 24px;
@@ -164,63 +190,97 @@
     border: 8px double #d9ad43;
     background: white;
     text-align: center;
+    overflow-wrap: anywhere;
   }
 
-  [hidden] { display: none !important; }
+  .certificate-actions {
+    margin-top: 28px;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+  }
+
+  .action-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  #finishButton {
+    background: #23805b;
+  }
+
+  .hint {
+    font-size: 15px;
+    line-height: 1.6;
+    color: #536783;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
 
   @media (max-width: 850px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   @media (max-width: 450px) {
-    .panel { padding: 20px 12px; }
-    .grid { gap: 10px; }
-    .card { padding: 18px 8px; }
-    h1 { font-size: 29px; }
+    .panel {
+      padding: 20px 12px;
+    }
+
+    .grid {
+      gap: 10px;
+    }
+
+    .card {
+      padding: 18px 8px;
+    }
+
+    h1 {
+      font-size: 29px;
+    }
+
+    #certificate {
+      padding: 24px 14px;
+    }
   }
 
   @media print {
-    body > header { display: none; }
-    main { margin: 0; max-width: none; }
-    main > section { display: none !important; }
-    main > #certificate:not([hidden]) { display: block !important; }
-    #certificate button { display: none; }
+    body {
+      background: white;
+    }
+
+    body > header {
+      display: none;
+    }
+
+    main {
+      margin: 0;
+      padding: 0;
+      max-width: none;
+    }
+
+    main > section {
+      display: none !important;
+    }
+
+    main > #certificate:not([hidden]) {
+      display: block !important;
+      margin: 0;
+    }
+
+    .certificate-actions {
+      display: none !important;
+    }
   }
 </style>
 </head>
-<div style="text-align:center; padding:0 20px 35px;">
-  <button
-    type="button"
-    onclick="mulaSemula()"
-    style="background:#b93660; color:white;
-           padding:14px 24px; border:0;
-           border-radius:12px; cursor:pointer;
-           font-size:16px; font-weight:bold;">
-    ↻ Mula Semula / Murid Baharu
-  </button>
-</div>
 
-<script>
-function mulaSemula() {
-  const setuju = confirm(
-    "Padam semua lencana pada pelayar ini dan mula semula untuk murid baharu?"
-  );
-
-  if (!setuju) return;
-
-  try {
-    localStorage.removeItem("pasport-adiwira-badges-v1");
-  } catch (error) {
-    alert("Simpanan tidak dapat dikosongkan. Sila cuba semula.");
-    return;
-  }
-
-  // Kembali ke halaman aktiviti Misi 1.
-  window.location.href =
-    "https://norainiandiarip.my.canva.site/hindari-influenza#page-PBbr92sYH1m16XKM";
-}
-</script>
 <body>
+
 <header>
   <small>MISI KECIL · SEMANGAT BESAR</small>
   <h1>Pasport Adiwira Saya</h1>
@@ -228,56 +288,112 @@ function mulaSemula() {
 </header>
 
 <main>
+
   <section class="panel">
     <div class="heading">
       <div>
         <h2>Koleksi lencana</h2>
         <p>Selesaikan aktiviti dan tuntut lencana misi anda.</p>
       </div>
+
       <span id="count">0/5 lencana dikumpul</span>
     </div>
 
-    <progress id="progress" max="5" value="0"
-      aria-label="Bilangan lencana dikumpulkan"></progress>
+    <progress
+      id="progress"
+      max="5"
+      value="0"
+      aria-label="Bilangan lencana dikumpulkan">
+    </progress>
 
     <p id="notice"></p>
     <p id="warning" role="status" hidden></p>
+
     <div class="grid" id="grid"></div>
+
     <p id="message" role="status" aria-live="polite"></p>
-    <a id="back" class="back" hidden>Kembali ke Aktiviti</a>
+
+    <a id="back" class="back" hidden>
+      Kembali ke Aktiviti
+    </a>
   </section>
 
   <section class="certificate-panel">
     <h2>Sijil pencapaian</h2>
-    <p>Kumpulkan semua 5 lencana untuk membuka sijil.</p>
-    <button id="certificateButton" disabled>Dapatkan Sijil</button>
+
+    <p id="certificateHint">
+      Kumpulkan semua 5 lencana untuk membuka sijil.
+    </p>
+
+    <button id="certificateButton" type="button" disabled>
+      Dapatkan Sijil
+    </button>
 
     <form id="nameForm" hidden>
-      <p><label for="studentInput">Nama pada sijil</label></p>
-      <input id="studentInput" maxlength="80"
-        autocomplete="name" required>
-      <p><button type="submit">Paparkan sijil</button></p>
+      <p>
+        <label for="studentInput">Nama pada sijil</label>
+      </p>
+
+      <input
+        id="studentInput"
+        maxlength="80"
+        autocomplete="off"
+        placeholder="Masukkan nama murid"
+        required>
+
+      <p>
+        <button type="submit">Paparkan sijil</button>
+      </p>
     </form>
   </section>
 
   <section id="certificate" hidden>
     <p>SIJIL PENCAPAIAN</p>
+
     <h1>Adiwira Kesihatan</h1>
+
     <p>Dengan bangganya diberikan kepada</p>
+
     <h2 id="studentName"></h2>
-    <p>Kerana berjaya mengumpulkan kelima-lima lencana misi.</p>
-    <p>⭐ Wira Muda · Detektif Influenza · Pelindung Kesihatan<br>
-      Wira Prihatin · Adiwira Cegah Influenza ⭐</p>
+
+    <p>
+      Kerana berjaya mengumpulkan kelima-lima lencana misi.
+    </p>
+
+    <p>
+      ⭐ Wira Muda · Detektif Influenza · Pelindung Kesihatan
+      <br>
+      Wira Prihatin · Adiwira Cegah Influenza ⭐
+    </p>
+
     <p id="certificateDate"></p>
-    <button id="printButton">Cetak / Simpan PDF</button>
+
+    <div class="certificate-actions">
+      <p class="hint">
+        Cetak atau simpan sijil dahulu.
+        Kemudian tekan Selesai untuk kembali ke halaman utama
+        dan kosongkan lencana bagi murid seterusnya.
+      </p>
+
+      <div class="action-buttons">
+        <button id="printButton" type="button">
+          Cetak / Simpan PDF
+        </button>
+
+        <button id="finishButton" type="button">
+          Selesai ✓
+        </button>
+      </div>
+    </div>
   </section>
+
 </main>
 
 <script>
 "use strict";
 
-/* Pautan halaman sebenar daripada menu website Canva. */
-const CANVA = "https://norainiandiarip.my.canva.site/hindari-influenza";
+const CANVA =
+  "https://norainiandiarip.my.canva.site/hindari-influenza";
 
 const MISSIONS = [
   {
@@ -317,26 +433,36 @@ const MISSIONS = [
   }
 ];
 
+/* Kekalkan kunci ini supaya lencana lama masih boleh dibaca. */
 const STORAGE_KEY = "pasport-adiwira-badges-v1";
+
 const $ = id => document.getElementById(id);
 
 const params = new URLSearchParams(window.location.search);
 const rawMission = params.get("mission");
+
 const missionId = /^[1-5]$/.test(rawMission || "")
   ? Number(rawMission)
   : null;
 
-const activeMission = MISSIONS.find(m => m.id === missionId);
+const activeMission = MISSIONS.find(
+  mission => mission.id === missionId
+);
+
 let storageAvailable = true;
 
 function readSavedBadges() {
   try {
-    const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    const data = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
+    );
 
     if (!Array.isArray(data)) return new Set();
 
     return new Set(
-      data.filter(id => Number.isInteger(id) && id >= 1 && id <= 5)
+      data.filter(
+        id => Number.isInteger(id) && id >= 1 && id <= 5
+      )
     );
   } catch {
     storageAvailable = false;
@@ -346,7 +472,6 @@ function readSavedBadges() {
 
 let earned = readSavedBadges();
 
-/* Semak sama ada pelayar membenarkan simpanan. */
 try {
   const testKey = STORAGE_KEY + "-test";
   localStorage.setItem(testKey, "1");
@@ -357,37 +482,55 @@ try {
 
 function saveBadges() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...earned]));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify([...earned])
+    );
   } catch {
     storageAvailable = false;
   }
 }
 
+function clearCertificate() {
+  $("studentInput").value = "";
+  $("studentName").textContent = "";
+  $("certificateDate").textContent = "";
+  $("nameForm").hidden = true;
+  $("certificate").hidden = true;
+}
+
 function render() {
-  $("count").textContent = earned.size + "/5 lencana dikumpul";
+  $("count").textContent =
+    earned.size + "/5 lencana dikumpul";
+
   $("progress").value = earned.size;
 
   if (!activeMission) {
     $("notice").textContent =
       "Mod koleksi sahaja. Masuk melalui butang Ambil Lencana " +
       "di website aktiviti untuk mengaktifkan satu misi.";
+
     $("back").hidden = true;
   } else {
     $("notice").textContent = earned.has(missionId)
       ? "Lencana Misi " + missionId +
-        " sudah dituntut. Kembali ke aktiviti untuk meneruskan pembelajaran."
+        " sudah dituntut. Kembali ke aktiviti untuk " +
+        "meneruskan pembelajaran."
       : "Anda datang untuk Misi " + missionId +
         ". Hanya lencana misi ini boleh dituntut.";
 
     $("back").href = activeMission.returnURL;
-    $("back").textContent = "Kembali ke " + activeMission.page;
+    $("back").textContent =
+      "Kembali ke " + activeMission.page;
+
     $("back").hidden = false;
   }
 
   $("warning").hidden = storageAvailable;
+
   $("warning").textContent =
-    "Simpanan pelayar tidak tersedia. Lencana sesi ini mungkin hilang " +
-    "apabila halaman ditutup atau dimuat semula.";
+    "Simpanan pelayar tidak tersedia. Lencana sesi ini mungkin " +
+    "hilang apabila halaman ditutup atau dimuat semula.";
 
   $("grid").replaceChildren();
 
@@ -410,7 +553,9 @@ function render() {
 
     const button = document.createElement("button");
     button.type = "button";
-    button.disabled = claimed || mission.id !== missionId;
+
+    button.disabled =
+      claimed || mission.id !== missionId;
 
     button.textContent = claimed
       ? "✓ Sudah dituntut"
@@ -418,33 +563,39 @@ function render() {
         ? "Tuntut lencana"
         : "🔒 Dikunci";
 
-    button.addEventListener("click", () => claimBadge(mission.id));
+    button.addEventListener(
+      "click",
+      () => claimBadge(mission.id)
+    );
 
     card.append(label, icon, title, button);
     $("grid").append(card);
   }
 
   const complete = earned.size === 5;
+
   $("certificateButton").disabled = !complete;
 
+  $("certificateHint").textContent = complete
+    ? "Tahniah! Anda telah mengumpulkan semua 5 lencana."
+    : "Kumpulkan semua 5 lencana untuk membuka sijil.";
+
   if (!complete) {
-    $("nameForm").hidden = true;
-    $("certificate").hidden = true;
+    clearCertificate();
   }
 }
 
 function claimBadge(id) {
-  /* Hanya misi daripada pautan masuk boleh dituntut. */
   if (id !== missionId || earned.has(id)) return;
 
-  /* Gabungkan koleksi yang mungkin disimpan oleh tab lain. */
   for (const savedId of readSavedBadges()) {
     earned.add(savedId);
   }
 
   if (earned.has(id)) {
     render();
-    $("message").textContent = "Lencana ini sudah dituntut.";
+    $("message").textContent =
+      "Lencana ini sudah dituntut.";
     return;
   }
 
@@ -453,35 +604,54 @@ function claimBadge(id) {
   render();
 
   $("message").textContent =
-    "Tahniah! Lencana " + MISSIONS[id - 1].name +
+    "Tahniah! Lencana " +
+    MISSIONS[id - 1].name +
     " berjaya dikumpulkan.";
 }
 
-/* Selaraskan paparan jika koleksi berubah dalam tab lain. */
+/* Kemas kini tab lain jika koleksi berubah atau dikosongkan. */
 window.addEventListener("storage", event => {
   if (event.key === STORAGE_KEY || event.key === null) {
     earned = readSavedBadges();
+    $("message").textContent = "";
+    render();
+  }
+});
+
+/* Semak semula koleksi apabila kembali melalui browser Back. */
+window.addEventListener("pageshow", event => {
+  if (event.persisted) {
+    if (storageAvailable) {
+      earned = readSavedBadges();
+    }
+
+    clearCertificate();
+    $("message").textContent = "";
     render();
   }
 });
 
 $("certificateButton").addEventListener("click", () => {
   if (earned.size !== 5) return;
+
   $("nameForm").hidden = false;
   $("studentInput").focus();
 });
 
 $("nameForm").addEventListener("submit", event => {
   event.preventDefault();
+
   if (earned.size !== 5) return;
 
   const name = $("studentInput").value.trim();
+
   if (!name) {
     $("studentInput").focus();
     return;
   }
 
   $("studentName").textContent = name;
+
   $("certificateDate").textContent =
     new Intl.DateTimeFormat("ms-MY", {
       dateStyle: "long",
@@ -489,12 +659,52 @@ $("nameForm").addEventListener("submit", event => {
     }).format(new Date());
 
   $("certificate").hidden = false;
-  $("certificate").scrollIntoView({ behavior: "smooth" });
+
+  $("certificate").scrollIntoView({
+    behavior: "smooth"
+  });
 });
 
-$("printButton").addEventListener("click", () => window.print());
+$("printButton").addEventListener("click", () => {
+  window.print();
+});
+
+$("finishButton").addEventListener("click", () => {
+  if (earned.size !== 5 || $("certificate").hidden) return;
+
+  const confirmed = confirm(
+    "Sudah cetak atau simpan sijil?\n\n" +
+    "Tekan OK untuk selesai. Semua lencana pada pelayar ini " +
+    "akan dikosongkan untuk murid seterusnya."
+  );
+
+  if (!confirmed) return;
+
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+
+    if (localStorage.getItem(STORAGE_KEY) !== null) {
+      throw new Error("Simpanan belum dikosongkan.");
+    }
+  } catch {
+    alert(
+      "Lencana belum dapat dikosongkan. " +
+      "Sila cuba semula sebelum menyerahkan peranti " +
+      "kepada murid seterusnya."
+    );
+    return;
+  }
+
+  earned.clear();
+  clearCertificate();
+  $("message").textContent = "";
+  render();
+
+  window.location.replace(CANVA);
+});
 
 render();
 </script>
+
 </body>
 </html>
